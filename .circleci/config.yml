@@ -1,0 +1,77 @@
+---
+version: 2.1
+
+orbs:
+  terraform: feedyard/terraform@0.3.0
+
+on-push-master: &on-push-master
+  branches:
+    only: /master/
+  tags:
+    ignore: /.*/
+
+on-tag-master: &on-tag-master
+  branches:
+    ignore: /.*/
+  tags:
+    only: /.*/
+
+commands:
+  deploy-istio:
+    parameters:
+      cluster:
+        description: target kubernetes cluster
+        type: string
+        default: ""
+      istio-version:
+        description: version of istio to download and install
+        type: string
+        default: $(cat << parameters.cluster >>.json | jq -r '.istio_version')
+    steps:
+      - run:
+          name: pull kubeconfig
+          command: |
+            mkdir ~/.kube
+            SECRETHUB_VAR_ENV=<< parameters.cluster >> secrethub inject -i tpl/kubeconfig.tpl -o ~/.kube/config
+      - run:
+          name: pull desired istio version
+          command: |
+            curl -L https://istio.io/downloadIstio | ISTIO_VERSION=<< parameters.istio-version >> sh -
+      - run:
+          name: deploy istio with cluster specific values
+          command: bash tpl/deploy_istio.sh << parameters.cluster >>
+      - run:
+          name: test istio deployment
+          command: |
+            secrethub inject -i tpl/nonprod_test.sh.tpl -o nonprod_test.sh
+            bash nonprod_test.sh << parameters.cluster >>
+
+
+jobs:
+   deploy-servicemesh:
+      parameters:
+        cluster:
+          description: target kubernetes cluster
+          type: string
+          default: ""
+      shell: secrethub run -- /bin/sh -eo pipefail
+      docker:
+        - image: twdps/circleci-infra-image:stable
+          auth:
+            username: $DOCKER_USERNAME
+            password: $DOCKER_PASSWORD
+      steps:
+        - deploy-istio:
+            cluster: << parameters.cluster >>
+
+workflows:
+  version: 2
+
+  poc-platform-servicemesh-pipeline:
+    jobs:
+      - deploy-servicemesh:
+          name: deploy-sandbox-servicemesh
+          context: dps-va-di
+          cluster: sandbox
+
+

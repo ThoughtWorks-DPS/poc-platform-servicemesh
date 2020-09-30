@@ -1,0 +1,8 @@
+{
+  "cluster_name": "sandbox",
+  "istio_version": "1.7.2",
+  "default_limits_cpu": "250m",
+  "default_limits_memory": "256Mi",
+  "kiali_version": "1.23.0",
+  ""
+}
