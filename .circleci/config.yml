@@ -56,7 +56,7 @@ jobs:
           default: ""
       shell: secrethub run -- /bin/sh -eo pipefail
       docker:
-        - image: twdps/circleci-infra-image:stable
+        - image: twdps/di-circleci-infra-image:stable
           auth:
             username: $DOCKER_USERNAME
             password: $DOCKER_PASSWORD
