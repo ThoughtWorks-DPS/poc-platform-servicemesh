@@ -31,6 +31,7 @@ commands:
       - run:
           name: pull kubeconfig
           command: |
+            ls -la
             mkdir ~/.kube
             SECRETHUB_VAR_ENV=<< parameters.cluster >> secrethub inject -i tpl/kubeconfig.tpl -o ~/.kube/config
       - run:
