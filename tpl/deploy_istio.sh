@@ -4,11 +4,12 @@
 #
 # $1 = cluster config to use
 
-export ISTIO_VERSION=$(cat ${1}.json | jq -r '.istio_version')
-export KIALI_VERSION=$(cat ${1}.json | jq -r '.kiali_version')
-export DEFAULT_LIMITS_CPU=$(cat ${1}.json | jq -r '.default_limits_cpu')
-export DEFAULT_LIMITS_MEMORY=$(cat ${1}.json | jq -r '.default_limits_memory')
+export ISTIO_VERSION=$(cat tpl/${1}.json | jq -r '.istio_version')
+export KIALI_VERSION=$(cat tpl/${1}.json | jq -r '.kiali_version')
+export DEFAULT_LIMITS_CPU=$(cat tpl/${1}.json | jq -r '.default_limits_cpu')
+export DEFAULT_LIMITS_MEMORY=$(cat tpl/${1}.json | jq -r '.default_limits_memory')
 
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=$ISTIO_VERSION >> sh -
 
 cat <<EOF > istio-deploy-values.yaml
 ---

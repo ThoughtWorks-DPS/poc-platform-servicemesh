@@ -32,10 +32,6 @@ commands:
         description: target kubernetes cluster
         type: string
         default: ""
-      istio-version:
-        description: version of istio to download and install
-        type: string
-        default: $(cat << parameters.cluster >>.json | jq -r '.istio_version')
     steps:
       - run:
           name: pull kubeconfig
@@ -43,10 +39,6 @@ commands:
             ls -la
             mkdir ~/.kube
             SECRETHUB_VAR_ENV=<< parameters.cluster >> secrethub inject -i tpl/kubeconfig.tpl -o ~/.kube/config
-      - run:
-          name: pull desired istio version
-          command: |
-            curl -L https://istio.io/downloadIstio | ISTIO_VERSION=<< parameters.istio-version >> sh -
       - run:
           name: deploy istio with cluster specific values
           command: bash tpl/deploy_istio.sh << parameters.cluster >>
