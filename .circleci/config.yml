@@ -4,6 +4,15 @@ version: 2.1
 orbs:
   terraform: feedyard/terraform@0.3.0
 
+executors:
+  infra=image:
+    docker:
+      - image: twdps/di-circleci-infra-image:stable
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    shell: secrethub run -- /bin/sh -eo pipefail
+      
 on-push-master: &on-push-master
   branches:
     only: /master/
@@ -49,21 +58,18 @@ commands:
 
 
 jobs:
-   deploy-servicemesh:
-      parameters:
-        cluster:
-          description: target kubernetes cluster
-          type: string
-          default: ""
-      shell: secrethub run -- /bin/sh -eo pipefail
-      docker:
-        - image: twdps/di-circleci-infra-image:stable
-          auth:
-            username: $DOCKER_USERNAME
-            password: $DOCKER_PASSWORD
-      steps:
-        - deploy-istio:
-            cluster: << parameters.cluster >>
+  deploy-servicemesh:
+    executor: infra-image
+    parameters:
+      cluster:
+        description: target kubernetes cluster
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - setup_remote_docker
+      - deploy-istio:
+          cluster: << parameters.cluster >>
 
 workflows:
   version: 2
