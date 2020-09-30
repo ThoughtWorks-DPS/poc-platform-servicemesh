@@ -5,7 +5,7 @@ orbs:
   terraform: feedyard/terraform@0.3.0
 
 executors:
-  infra=image:
+  infra-image:
     docker:
       - image: twdps/di-circleci-infra-image:stable
         auth:
