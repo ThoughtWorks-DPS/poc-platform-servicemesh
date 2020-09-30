@@ -42,3 +42,4 @@ EOF
 istioctl operator init
 kubectl create ns istio-system
 cat istio-deploy-values.yaml | kubectl apply -f - 
+sleep 20
