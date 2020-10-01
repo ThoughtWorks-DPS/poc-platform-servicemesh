@@ -44,9 +44,7 @@ commands:
           command: bash tpl/deploy_istio.sh << parameters.cluster >>
       - run:
           name: test istio deployment
-          command: |
-            secrethub inject -i tpl/nonprod_test.sh.tpl -o nonprod_test.sh
-            bash nonprod_test.sh << parameters.cluster >>
+          command: bats test
 
 
 jobs:
@@ -72,5 +70,10 @@ workflows:
           name: deploy-sandbox-servicemesh
           context: dps-va-di
           cluster: sandbox
-
-
+          filters: *on-push-master
+      
+      - deploy-servicemesh:
+          name: deploy-preview-servicemesh
+          context: dps-va-di
+          cluster: preview
+          filters: *on-tag-master
