@@ -1,8 +1,7 @@
 {
   "cluster_name": "preview",
   "istio_version": "1.7.2",
-  "default_limits_cpu": "500m",
-  "default_limits_memory": "512Mi",
-  "kiali_version": "1.23.0",
-  ""
+  "default_limits_cpu": "2000m",
+  "default_limits_memory": "1024Mi",
+  "kiali_version": "1.24.0"
 }

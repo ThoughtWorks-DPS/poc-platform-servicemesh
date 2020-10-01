@@ -2,9 +2,23 @@
 
 Starting point for istio servicemesh.
 
-- Deploys Istio Operator
-- Installs istio using operator, default profile plus:
+- Deploys Istio using istioctl deploy with manifest overlay
 - - distroless images
 - - meshConfig.accessLogFile: "/dev/stdout"
 - - meshConfig.accessLogEncoding: "JSON" 
-- - ingressgateway enabled, for resource limit configuration 
+- - ingressgateway enabled
+- - prometheus, grafana, jaeger, kiali have quickstart installs, not production ready, only proxy access
+
+
+## to access UIs
+
+```
+$ istioctl dashboard controlz <pod-name[.namespace]>
+$ istioctl dashboard envoy <pod-name[.namespace]>
+$ istioctl dashboard prometheus
+$ istioctl dashboard grafana
+$ istioctl dashboard jaeger
+$ istioctl dashboard kiali
+```
+
+
