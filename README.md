@@ -20,5 +20,3 @@ $ istioctl dashboard grafana
 $ istioctl dashboard jaeger
 $ istioctl dashboard kiali
 ```
-
-
