@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+
+cat <<EOF > monitoring-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -12,7 +15,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "monitoring.sandbox.devportal.name"
+        - "monitoring.$1.devportal.name"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -21,7 +24,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - "monitoring.sandbox.devportal.name"
+    - "monitoring.$1.devportal.name"
   gateways:
     - monitoring-gateway
   http:
@@ -33,3 +36,7 @@ spec:
           host: kiali
           port:
             number: 20001
+EOF
+kubectl apply -f monitoring-traffic-management.yaml
+
+sleep 10

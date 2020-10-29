@@ -46,6 +46,9 @@ commands:
           name: deploy external dns
           command: bash tpl/deploy_external_dns.sh << parameters.cluster >>
       - run:
+          name: deploy monitoring traffic management
+          command: bash tpl/deploy_monitoring_traffic_management.sh << parameters.cluster >>
+      - run:
           name: test istio deployment
           command: bats test
 
