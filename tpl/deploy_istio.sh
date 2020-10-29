@@ -18,5 +18,6 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.7/sampl
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.7/samples/addons/prometheus.yaml
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.7/samples/addons/grafana.yaml
 kubectl apply -f kiali-deployment.yaml
+kubectl apply -f tpl/$1.monitoring-traffic-management.yaml
 
 sleep 10

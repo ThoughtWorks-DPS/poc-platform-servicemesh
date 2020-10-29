@@ -37,9 +37,7 @@
   [[ "${output}" =~ "Running" ]]
 }
 
-@test "validate external dns setup" {
-    run bash -c "kubectl apply -f httpbin.yaml"
-    run bash -c "curl -X GET http://httpbin.sandbox.devportal.name/status/200 -w %{http_code}"
+@test "validate external dns setup for monitoring with resource routing" {
+    run bash -c "curl -X GET monitoring.sandbox.devportal.name/kiali/ -w %{http_code}"
     [[ "${output}" =~ "200" ]]
-    run bash -c "kubectl delete -f httpbin.yaml"
 }
