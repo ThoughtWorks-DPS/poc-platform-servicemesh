@@ -50,7 +50,7 @@ commands:
           command: bash tpl/deploy_monitoring_traffic_management.sh << parameters.cluster >>
       - run:
           name: test istio deployment
-          command: bats test
+          command: CLUSTER=<< parameters.cluster >> bats test
 
 jobs:
   deploy-servicemesh:
