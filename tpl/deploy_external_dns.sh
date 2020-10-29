@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)
-echo $1
+
+aws sts assume-role --output json --role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/DPSTerraformRole --role-session-name deploy-external-dns-session > credentials
+export AWS_ACCESS_KEY_ID=$(cat credentials | jq -r ".Credentials.AccessKeyId")
+export AWS_SECRET_ACCESS_KEY=$(cat credentials | jq -r ".Credentials.SecretAccessKey")
+export AWS_SESSION_TOKEN=$(cat credentials | jq -r ".Credentials.SessionToken")
+export AWS_DEFAULT_REGION=us-west-2
 export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name "${1}.devportal.name" | jq -r '.HostedZones[].Id')
 
 # external-dns deployment files
@@ -80,7 +85,7 @@ spec:
         # - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
         - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
         - --registry=txt
-        - --txt-owner-id=/hostedzone/Z02471992ZS1AUJJK2MLC
+        - --txt-owner-id=${HOSTED_ZONE_ID}
       securityContext:
         fsGroup: 65534 # For ExternalDNS to be able to read Kubernetes and AWS token files
 EOF
