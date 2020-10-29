@@ -43,9 +43,11 @@ commands:
           name: deploy istio with cluster specific values
           command: bash tpl/deploy_istio.sh << parameters.cluster >>
       - run:
+          name: deploy external dns
+          command: bash tpl/deploy_external_dns.sh << parameters.cluster >>
+      - run:
           name: test istio deployment
           command: bats test
-
 
 jobs:
   deploy-servicemesh:

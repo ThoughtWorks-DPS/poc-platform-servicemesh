@@ -7,6 +7,11 @@
   [[ "${output}" =~ "us-west-2.elb.amazonaws.com" ]]
 }
 
+@test "evaluate external-dns status" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'external-dns'"
+  [[ "${output}" =~ "Running" ]]
+}
+
 @test "evaluate istio ingressgateway pod status" {
   run bash -c "kubectl get pods -n istio-system -o wide | grep 'istio-ingressgateway'"
   [[ "${output}" =~ "Running" ]]
