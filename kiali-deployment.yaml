@@ -595,6 +595,37 @@ spec:
         secret:
           secretName: kiali
           optional: true
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: kiali-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "kiali.sandbox.devportal.name"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kiali
+spec:
+  hosts:
+    - "kiali.sandbox.devportal.name"
+  gateways:
+    - kiali-gateway
+  http:
+    route:
+      - destination:
+          port:
+            number: 20001
+          host: kiali
 # ...
 # ---
 # # Source: kiali-server/templates/dashboards/envoy.yaml
