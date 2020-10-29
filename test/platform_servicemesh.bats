@@ -36,3 +36,10 @@
   run bash -c "kubectl get pods -n istio-system -o wide | grep 'kiali'"
   [[ "${output}" =~ "Running" ]]
 }
+
+@test "validate external dns setup" {
+    run bash -c "kubectl apply -f httpbin.yaml"
+    run bash -c "curl -X http://httpbin.sandbox.devportal.name -w %{http_code}"
+    [[ "${output}" =~ "200" ]]
+    run bash -c "kubectl delete -f httpbin.yaml"
+}
