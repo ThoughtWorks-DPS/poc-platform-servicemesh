@@ -43,6 +43,6 @@
 }
 
 @test "validate external dns setup for monitoring with resource routing" {
-    run bash -c "curl -X GET monitoring.$CLUSTER.devportal.name/kiali/ -w %{http_code}"
+    run bash -c "curl -X GET istio-system.$CLUSTER.devportal.name/kiali/ -w %{http_code}"
     [[ "${output}" =~ "200" ]]
 }
