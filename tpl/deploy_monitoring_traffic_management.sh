@@ -15,7 +15,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "istio-system.$1.devportal.name"
+        - "*.$1.devportal.name"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -24,7 +24,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - "istio-system.$1.devportal.name"
+    - "*.$1.devportal.name"
   gateways:
     - monitoring-gateway
   http:
