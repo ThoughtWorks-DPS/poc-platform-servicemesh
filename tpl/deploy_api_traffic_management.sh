@@ -20,7 +20,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: poc-va-api-virtual-service
-spec:ga
+spec:
   hosts:
   - "$1.devportal.name"
   gateways:

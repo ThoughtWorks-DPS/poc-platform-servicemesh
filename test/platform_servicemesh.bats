@@ -46,3 +46,19 @@
     run bash -c "curl -X GET istio-system.$CLUSTER.devportal.name/kiali/ -w %{http_code}"
     [[ "${output}" =~ "200" ]]
 }
+
+@test "evaluate api gateway existence" {
+  run bash -c "kubectl get gateway -n di-dev -o wide"
+  [[ "${output}" =~ "poc-va-api-gateway" ]]
+
+  run bash -c "kubectl get gateway -n di-staging -o wide"
+  [[ "${output}" =~ "poc-va-api-gateway" ]]
+}
+
+@test "evaluate api virtual service existence" {
+  run bash -c "kubectl get virtualservice -n di-dev"
+  [[ "${output}" =~ "poc-va-api-virtual-service" ]]
+
+  run bash -c "kubectl get kubectl get virtualservice -n di-staging"
+  [[ "${output}" =~ "poc-va-api-virtual-service" ]]
+}
