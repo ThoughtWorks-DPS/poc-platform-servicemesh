@@ -20,7 +20,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: poc-va-api-virtual-service
-spec:
+spec:ga
   hosts:
   - "$1.devportal.name"
   gateways:
@@ -37,6 +37,7 @@ spec:
           port:
             number: 5000
 EOF
-kubectl apply -f api-traffic-management.yaml
+kubectl apply -f api-traffic-management.yaml -n di-dev
+kubectl apply -f api-traffic-management.yaml -n di-staging
 
 sleep 10
