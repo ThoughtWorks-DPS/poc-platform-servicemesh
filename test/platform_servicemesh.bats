@@ -59,6 +59,6 @@
   run bash -c "kubectl get virtualservice -n di-dev"
   [[ "${output}" =~ "poc-va-api-virtual-service" ]]
 
-  run bash -c "kubectl get kubectl get virtualservice -n di-staging"
+  run bash -c "kubectl get virtualservice -n di-staging"
   [[ "${output}" =~ "poc-va-api-virtual-service" ]]
 }
