@@ -10,7 +10,7 @@ export AWS_DEFAULT_REGION=us-west-2
 
 export cluster=$1
 if [[ $cluster == 'preview' ]]; then
-  host='devportal.com'
+  host='devportal.name'
 fi
 
 if [[ $cluster == 'sandbox' ]]; then

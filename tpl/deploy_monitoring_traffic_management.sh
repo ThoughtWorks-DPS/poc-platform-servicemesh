@@ -2,7 +2,7 @@
 
 export cluster=$1
 if [[ $cluster == 'preview' ]]; then
-  host='monitoring.devportal.com'
+  host='monitoring.devportal.name'
 fi
 
 if [[ $cluster == 'sandbox' ]]; then

@@ -4,17 +4,17 @@ export cluster=$1
 export namespace=$2
 if [[ $cluster == 'preview' ]]; then
   if [[ $namespace == 'di-dev' ]]; then
-    host='dev.devportal.com'
+    host='dev.devportal.name'
   elif [[ $namespace == 'di-staging' ]]; then
-    host='api.devportal.com'
+    host='api.devportal.name'
   fi
 fi
 
 if [[ $cluster == 'sandbox' ]]; then
   if [[ $namespace == 'di-dev' ]]; then
-    host="dev.$cluster.devportal.com"
+    host="dev.$cluster.devportal.name"
   elif [[ $namespace == 'di-staging' ]]; then
-    host="api.$cluster.devportal.com"
+    host="api.$cluster.devportal.name"
   fi
 fi
 
