@@ -7,7 +7,17 @@ export AWS_ACCESS_KEY_ID=$(cat credentials | jq -r ".Credentials.AccessKeyId")
 export AWS_SECRET_ACCESS_KEY=$(cat credentials | jq -r ".Credentials.SecretAccessKey")
 export AWS_SESSION_TOKEN=$(cat credentials | jq -r ".Credentials.SessionToken")
 export AWS_DEFAULT_REGION=us-west-2
-export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name "${1}.devportal.name" | jq -r --arg DNS "${1}.devportal.name" '.HostedZones[] | select( .Name | contains($DNS)) | .Id')
+
+export cluster=$1
+if [[ $cluster == 'preview' ]]; then
+  host='*.devportal.com'
+fi
+
+if [[ $cluster == 'sandbox' ]]; then
+  host="*.$cluster.devportal.name"
+fi
+
+export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $host | jq -r --arg DNS $host '.HostedZones[] | select( .Name | contains($DNS)) | .Id')
 
 # external-dns deployment files
 cat <<EOF > external-dns-deployment.yaml
