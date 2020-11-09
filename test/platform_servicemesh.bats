@@ -42,23 +42,28 @@
   [[ "${output}" =~ "Running" ]]
 }
 
-@test "validate external dns setup for monitoring with resource routing" {
-    run bash -c "curl -X GET istio-system.$CLUSTER.devportal.name/kiali/ -w %{http_code}"
-    [[ "${output}" =~ "200" ]]
-}
-
 @test "evaluate api gateway existence" {
   run bash -c "kubectl get gateway -n di-dev -o wide"
-  [[ "${output}" =~ "poc-va-api-gateway" ]]
+  [[ "${output}" =~ "api-gateway" ]]
 
   run bash -c "kubectl get gateway -n di-staging -o wide"
-  [[ "${output}" =~ "poc-va-api-gateway" ]]
+  [[ "${output}" =~ "api-gateway" ]]
 }
 
-@test "evaluate api virtual service existence" {
-  run bash -c "kubectl get virtualservice -n di-dev"
-  [[ "${output}" =~ "poc-va-api-virtual-service" ]]
+@test "evaluate api virtual service existence for dev" {
+  run bash -c "kubectl get virtualservice -n di-dev | grep 'api-virtual-service'"
+  if [[ $CLUSTER == 'sandbox' ]]; then
+    [[ "${output}" =~ "["dev.sandbox.devportal.com"]" ]]
+  elif [[ $CLUSTER == 'preview' ]]; then
+    [[ "${output}" =~ "["dev.devportal.com"]" ]]
+  fi
+}
 
-  run bash -c "kubectl get virtualservice -n di-staging"
-  [[ "${output}" =~ "poc-va-api-virtual-service" ]]
+@test "evaluate api virtual service existence for staging" {
+  run bash -c "kubectl get virtualservice -n di-staging | grep 'api-virtual-service'"
+  if [[ $CLUSTER == 'sandbox' ]]; then
+    [[ "${output}" =~ "["api.sandbox.devportal.com"]" ]]
+  elif [[ $CLUSTER == 'preview' ]]; then
+    [[ "${output}" =~ "["api.devportal.com"]" ]]
+  fi
 }

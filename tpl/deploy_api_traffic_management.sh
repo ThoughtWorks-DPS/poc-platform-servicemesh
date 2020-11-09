@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
 
+export cluster=$1
+export namespace=$2
+if [[ $cluster == 'preview' ]]; then
+  if [[ $namespace == 'di-dev' ]]; then
+    host='dev.devportal.com'
+  elif [[ $namespace == 'di-staging' ]]; then
+    host='api.devportal.com'
+  fi
+fi
+
+if [[ $cluster == 'sandbox' ]]; then
+  if [[ $namespace == 'di-dev' ]]; then
+    host="dev.$cluster.devportal.com"
+  elif [[ $namespace == 'di-staging' ]]; then
+    host="api.$cluster.devportal.com"
+  fi
+fi
+
 cat <<EOF > api-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: poc-va-api-gateway
+  name: api-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -14,15 +32,15 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "$1.devportal.name"
+    - "$host"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: poc-va-api-virtual-service
+  name: api-virtual-service
 spec:
   hosts:
-  - "$1.devportal.name"
+  - "$host"
   gateways:
   - poc-va-api-gateway
   http:
@@ -37,7 +55,6 @@ spec:
           port:
             number: 5000
 EOF
-kubectl apply -f api-traffic-management.yaml -n di-dev
-kubectl apply -f api-traffic-management.yaml -n di-staging
+kubectl apply -f api-traffic-management.yaml -n $2
 
 sleep 10

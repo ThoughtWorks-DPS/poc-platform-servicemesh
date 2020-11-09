@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+export cluster=$1
+if [[ $cluster == 'preview' ]]; then
+  host='monitoring.devportal.com'
+fi
+
+if [[ $cluster == 'sandbox' ]]; then
+  host="*.$cluster.devportal.name"
+fi
+
 cat <<EOF > monitoring-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -15,27 +24,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "*.$1.devportal.name"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: kiali-virtual-service
-  namespace: istio-system
-spec:
-  hosts:
-    - "*.$1.devportal.name"
-  gateways:
-    - monitoring-gateway
-  http:
-    - match:
-        - uri:
-            prefix: /kiali
-      route:
-      - destination:
-          host: kiali
-          port:
-            number: 20001
+        - "$host"
 EOF
 kubectl apply -f monitoring-traffic-management.yaml
 
