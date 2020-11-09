@@ -42,7 +42,7 @@ spec:
   hosts:
   - "$host"
   gateways:
-  - poc-va-api-gateway
+  - api-gateway
   http:
     - match:
       - uri:
