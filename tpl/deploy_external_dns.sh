@@ -17,7 +17,7 @@ if [[ $cluster == 'sandbox' ]]; then
   host="$1.devportal.name"
 fi
 
-export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $host | jq -r --arg DNS $host '.HostedZones[] | select( .Name | contains($DNS)) | .Id')
+export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $host | jq -r --arg DNS $host '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
 
 # external-dns deployment files
 cat <<EOF >external-dns-deployment.yaml
