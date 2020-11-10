@@ -55,8 +55,8 @@ commands:
           name: deploy api traffic management for di-staging
           command: bash tpl/deploy_api_traffic_management.sh << parameters.cluster >> di-staging
       - run:
-          name: test istio deployment
-          command: CLUSTER=<< parameters.cluster >> bats test
+          name: test servicemesh deployment
+          command: CLUSTER=<< parameters.cluster >> bats test/platform_servicemesh.sh
 
 jobs:
   deploy-servicemesh:
