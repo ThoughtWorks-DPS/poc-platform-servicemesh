@@ -72,7 +72,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*.sandbox.devportal.name"
+    - "$host"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
