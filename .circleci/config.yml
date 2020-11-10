@@ -47,7 +47,7 @@ commands:
           command: bash tpl/deploy_external_dns.sh << parameters.cluster >>
       - run:
           name: test servicemesh deployment
-          command: CLUSTER=<< parameters.cluster >> bats test/platform_servicemesh.sh
+          command: CLUSTER=<< parameters.cluster >> bats test/platform_servicemesh.bats
       - run:
           name: deploy httpbin and validate
           command: bash tpl/deploy_httpbin.sh << parameters.cluster >>
@@ -65,7 +65,7 @@ commands:
           command: bash tpl/deploy_api_traffic_management.sh << parameters.cluster >> di-staging
       - run:
           name: test traffic management
-          command: CLUSTER=<< parameters.cluster >> bats test/platform_traffic_management.sh
+          command: CLUSTER=<< parameters.cluster >> bats test/platform_traffic_management.bats
 
 jobs:
   deploy-servicemesh:
