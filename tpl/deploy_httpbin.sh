@@ -81,7 +81,7 @@ metadata:
   namespace: httpbin
 spec:
   hosts:
-  - "*.sandbox.devportal.name"
+  - "$host"
   gateways:
   - httpbin-gateway
   http:
