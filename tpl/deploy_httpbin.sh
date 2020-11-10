@@ -92,6 +92,6 @@ spec:
           number: 8000
 EOF
 
-kubectl $2 -f httpbin.yaml
+kubectl apply -f httpbin.yaml
 
 sleep 10
