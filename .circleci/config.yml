@@ -86,6 +86,25 @@ workflows:
 
   poc-platform-servicemesh-pipeline:
     jobs:
+      - terraform/plan:
+          name: sandbox-change-plan
+          context: dps-va-di
+          shell: secrethub run -- /bin/sh -eo pipefail
+          workspace: sandbox
+          before-terraform:
+            - run:
+                name: generate environmental configuration and credentials from templates
+                command: |
+                  secrethub inject -i tpl/terraformrc.tpl -o ~/.terraformrc
+                  secrethub inject -i tpl/sandbox.auto.tfvars.json.tpl -o sandbox.auto.tfvars.json
+          filters: *on-push-master
+
+      - approve-sandbox-changes:
+          type: approval
+          requires:
+            - sandbox-change-plan
+          filters: *on-push-master
+
       - deploy-servicemesh:
           name: deploy-sandbox-servicemesh
           context: dps-va-di
