@@ -27,7 +27,7 @@ metadata:
   name: ${1}-external-dns
   namespace: kube-system
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-external-dns
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/servicemesh-${1}-external-dns
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
