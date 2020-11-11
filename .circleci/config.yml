@@ -124,6 +124,8 @@ workflows:
           name: deploy-sandbox-servicemesh
           context: dps-va-di
           cluster: sandbox
+          requires:
+            - sandbox-change-apply
           filters: *on-push-master
       
       - deploy-servicemesh:
