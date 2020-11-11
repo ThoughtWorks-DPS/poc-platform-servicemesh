@@ -3,5 +3,5 @@
     "assume_role": "DPSTerraformRole",
     "account_id": "{{ vapoc/platform/svc/aws/aws-account-id }}",
     "cluster_name": "sandbox",
-    "cluster_version": "1.18",
+    "cluster_version": "1.18"
 }
