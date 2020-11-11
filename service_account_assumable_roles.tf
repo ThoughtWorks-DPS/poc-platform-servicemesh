@@ -56,7 +56,7 @@ module "iam_assumable_role_external_dns" {
   version                       = ">= v3.3.0"
 
   create_role                   = true
-  role_name                     = "servicemesh-${var.cluster_name}-external-dns"
+  role_name                     = "${var.cluster_name}-external-dns"
   provider_url                  = replace(data.terraform_remote_state.eks.outputs.eks_cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.external_dns.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.k8s_external_dns_account_namespace}:${local.k8s_external_dns_service_account_name}"]
@@ -64,7 +64,7 @@ module "iam_assumable_role_external_dns" {
 }
 
 resource "aws_iam_policy" "external_dns" {
-  name_prefix = "servicemesh-${var.cluster_name}-external-dns"
+  name_prefix = "${var.cluster_name}-external-dns"
   description = "EKS external_dns policy for the ${var.cluster_name} cluster"
   policy      = data.aws_iam_policy_document.external_dns.json
 }
