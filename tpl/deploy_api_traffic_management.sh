@@ -47,8 +47,6 @@ spec:
     - match:
       - uri:
           prefix: /teams
-      rewrite:
-        uri: /
       route:
       - destination:
           host: poc-va-api
