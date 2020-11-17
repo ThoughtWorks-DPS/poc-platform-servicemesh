@@ -66,6 +66,12 @@ commands:
       - run:
           name: test traffic management
           command: CLUSTER=<< parameters.cluster >> bats test/platform_traffic_management.bats
+      - run:
+          name: deploy cert-manager
+          command: bash tpl/deploy_cert_manager.sh
+      - run:
+          name: deploy certificates
+          command: bash tpl/deploy_certificates.sh << parameters.cluster >>
 
 jobs:
   deploy-servicemesh:
