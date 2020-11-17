@@ -23,7 +23,7 @@ spec:
     email: $EMAIL
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: issuer-secret
+      name: devportal-staging
     solvers:
     - selector:
         dnsZones:
@@ -37,7 +37,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: devportal-staging
+  name: devportal-staging-cert
   namespace: cert-manager
 spec:
   secretName: devportal-certificate-secret
