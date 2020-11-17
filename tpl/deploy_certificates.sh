@@ -33,6 +33,19 @@ spec:
           region: $AWS_DEFAULT_REGION
           hostedZoneID: $HOSTED_ZONE_ID # optional, see policy above
           role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-external-dns
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: devportal-staging
+  namespace: cert-manager
+spec:
+  secretName: devportal-certificate-secret
+  issuerRef:
+    name: devportal-staging
+  dnsNames:
+  - '*.devportal.name'
+  - devportal.name
 EOF
 
 kubectl apply -f certificate_configuration.yaml
