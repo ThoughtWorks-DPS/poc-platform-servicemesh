@@ -41,7 +41,7 @@ metadata:
 spec:
   secretName: devportal-certificate-secret
   issuerRef:
-    name: devportal-staging-secret
+    name: devportal-staging
     kind: ClusterIssuer
   dnsNames:
   - '*.devportal.name'
