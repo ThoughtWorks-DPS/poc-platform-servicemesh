@@ -17,7 +17,6 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: devportal-staging
-  namespace: cert-manager
 spec:
   acme:
     email: $EMAIL
@@ -37,12 +36,13 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: devportal-staging-cert
+  name: devportal-certificate
   namespace: cert-manager
 spec:
   secretName: devportal-certificate-secret
   issuerRef:
     name: devportal-staging-secret
+    kind: ClusterIssuer
   dnsNames:
   - '*.devportal.name'
   - devportal.name
