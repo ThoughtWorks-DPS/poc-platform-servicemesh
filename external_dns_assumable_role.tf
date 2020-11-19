@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "external_dns" {
       "route53:GetChange"
     ]
 
-    resources = ["arn:aws:route53::change/*"]
+    resources = ["arn:aws:route53:::change/*"]
   }
 
   statement {
