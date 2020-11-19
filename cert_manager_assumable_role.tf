@@ -4,7 +4,7 @@ locals {
 }
 
 module "iam_assumable_role_cert_manager" {
-  source                        = "terraform-aws-modules/iam/aws/modules/iam-assumable-role-with-oidc"
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = ">= v3.3.0"
 
   create_role                   = true
