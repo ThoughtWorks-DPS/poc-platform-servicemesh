@@ -46,6 +46,12 @@ spec:
   dnsNames:
   - '*.devportal.name'
   - devportal.name
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-cert-manager
 EOF
 
 kubectl apply -f certificate_configuration.yaml
