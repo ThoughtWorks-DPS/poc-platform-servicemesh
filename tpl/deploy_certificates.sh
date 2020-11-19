@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)
 export EMAIL=$(secrethub read vapoc/platform/svc/gmail/username)
@@ -30,7 +31,7 @@ spec:
       dns01:
         route53:
           region: $AWS_DEFAULT_REGION
-          hostedZoneID: $HOSTED_ZONE_ID # optional, see policy above
+          hostedZoneID: $HOSTED_ZONE_ID
           role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-cert-manager
 ---
 apiVersion: cert-manager.io/v1
@@ -50,6 +51,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  namespace: cert-manager
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-cert-manager
 EOF
