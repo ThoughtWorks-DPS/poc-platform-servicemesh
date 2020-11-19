@@ -3,7 +3,7 @@
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)
 export EMAIL=$(secrethub read vapoc/platform/svc/gmail/username)
 
-aws sts assume-role --output json --role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/DPSTerraformRole --role-session-name deploy-external-dns-session >credentials
+aws sts assume-role --output json --role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/DPSTerraformRole --role-session-name deploy-cert-manager-session >credentials
 export AWS_ACCESS_KEY_ID=$(cat credentials | jq -r ".Credentials.AccessKeyId")
 export AWS_SECRET_ACCESS_KEY=$(cat credentials | jq -r ".Credentials.SecretAccessKey")
 export AWS_SESSION_TOKEN=$(cat credentials | jq -r ".Credentials.SessionToken")
@@ -31,7 +31,7 @@ spec:
         route53:
           region: $AWS_DEFAULT_REGION
           hostedZoneID: $HOSTED_ZONE_ID # optional, see policy above
-          role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-external-dns
+          role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-cert-manager
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
