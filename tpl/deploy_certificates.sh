@@ -32,7 +32,6 @@ spec:
         route53:
           region: $AWS_DEFAULT_REGION
           hostedZoneID: $HOSTED_ZONE_ID
-          role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${1}-cert-manager
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
