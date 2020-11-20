@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 export cluster=$1
 host="*.$1.devportal.name"
@@ -73,6 +74,9 @@ spec:
       protocol: HTTPS
     hosts:
     - "$host"
+    tls:
+      mode: SIMPLE
+      credentialName: devportal-certificate-secret
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
