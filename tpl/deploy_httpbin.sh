@@ -2,10 +2,7 @@
 set -e
 
 export cluster=$1
-host="*.$1.devportal.name"
-if [[ $cluster == 'preview' ]]; then
-  host='*.devportal.name'
-fi
+export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
 cat <<EOF > httpbin.yaml
 apiVersion: v1
@@ -76,7 +73,21 @@ spec:
     - "$host"
     tls:
       mode: SIMPLE
-      credentialName: devportal-certificate-secret
+      credentialName: httpbin-certificate-secret
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: httpbin-certificate
+  namespace: httpbin
+spec:
+  secretName: httpbin-certificate-secret
+  issuerRef:
+    name: devportal-staging
+    kind: ClusterIssuer
+  dnsNames:
+  - '*.${HOST}'
+  - ${HOST}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
