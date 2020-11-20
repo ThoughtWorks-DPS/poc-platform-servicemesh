@@ -68,9 +68,9 @@ spec:
     istio: ingressgateway
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      number: 443
+      name: https
+      protocol: HTTPS
     hosts:
     - "$host"
 ---
