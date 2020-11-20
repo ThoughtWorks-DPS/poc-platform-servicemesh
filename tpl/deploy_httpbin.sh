@@ -70,7 +70,7 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "$host"
+    - "$HOST"
     tls:
       mode: SIMPLE
       credentialName: httpbin-certificate-secret
@@ -96,7 +96,7 @@ metadata:
   namespace: httpbin
 spec:
   hosts:
-  - "$host"
+  - "$HOST"
   gateways:
   - httpbin-gateway
   http:
