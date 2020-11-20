@@ -73,21 +73,7 @@ spec:
     - "$HOST"
     tls:
       mode: SIMPLE
-      credentialName: httpbin-certificate-secret
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: httpbin-certificate
-  namespace: httpbin
-spec:
-  secretName: httpbin-certificate-secret
-  issuerRef:
-    name: devportal-staging
-    kind: ClusterIssuer
-  dnsNames:
-  - '*.${HOST}'
-  - ${HOST}
+      credentialName: devportal-certificate-secret
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService

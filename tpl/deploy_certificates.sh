@@ -37,7 +37,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: devportal-certificate
-  namespace: cert-manager
+  namespace: istio-system
 spec:
   secretName: devportal-certificate-secret
   issuerRef:
