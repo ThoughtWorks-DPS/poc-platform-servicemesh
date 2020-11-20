@@ -49,6 +49,12 @@ commands:
           name: test servicemesh deployment
           command: CLUSTER=<< parameters.cluster >> bats test/platform_servicemesh.bats
       - run:
+          name: deploy cert-manager
+          command: bash tpl/deploy_cert_manager.sh << parameters.cluster >>
+      - run:
+          name: deploy certificates
+          command: bash tpl/deploy_certificates.sh << parameters.cluster >>
+      - run:
           name: deploy httpbin and validate
           command: bash tpl/deploy_httpbin.sh << parameters.cluster >>
       - run:
@@ -66,12 +72,6 @@ commands:
       - run:
           name: test traffic management
           command: CLUSTER=<< parameters.cluster >> bats test/platform_traffic_management.bats
-      - run:
-          name: deploy cert-manager
-          command: bash tpl/deploy_cert_manager.sh << parameters.cluster >>
-      - run:
-          name: deploy certificates
-          command: bash tpl/deploy_certificates.sh << parameters.cluster >>
 
 jobs:
   deploy-servicemesh:
