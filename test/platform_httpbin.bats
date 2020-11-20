@@ -6,9 +6,9 @@
 }
 
 @test "validate httpbin is accessible through gateway" {
-  HOST="http://httpbin.$CLUSTER.devportal.name"
+  HOST="https://httpbin.$CLUSTER.devportal.name"
   if [[ $CLUSTER == 'preview' ]]; then
-    HOST="http://httpbin.devportal.name/"
+    HOST="https://httpbin.devportal.name/"
   fi
 
   run bash -c "curl -s -o /dev/null -w "%{http_code}" $HOST/get"
