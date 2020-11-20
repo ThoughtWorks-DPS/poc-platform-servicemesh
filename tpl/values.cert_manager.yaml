@@ -1,0 +1,5 @@
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: replace-me
+securityContext:
+  fsGroup: 1001
