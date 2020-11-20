@@ -9,9 +9,9 @@ export AWS_ACCESS_KEY_ID=$(cat credentials | jq -r ".Credentials.AccessKeyId")
 export AWS_SECRET_ACCESS_KEY=$(cat credentials | jq -r ".Credentials.SecretAccessKey")
 export AWS_SESSION_TOKEN=$(cat credentials | jq -r ".Credentials.SessionToken")
 export AWS_DEFAULT_REGION=us-west-2
-export host=devportal.name
+export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
-export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $host | jq -r --arg DNS $host '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
+export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $HOST | jq -r --arg DNS $HOST '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
 
 cat <<EOF >certificate_configuration.yaml
 apiVersion: cert-manager.io/v1
@@ -27,7 +27,7 @@ spec:
     solvers:
     - selector:
         dnsZones:
-          - "devportal.name"
+          - "${HOST}"
       dns01:
         route53:
           region: $AWS_DEFAULT_REGION
@@ -45,8 +45,8 @@ spec:
     name: devportal-staging
     kind: ClusterIssuer
   dnsNames:
-  - '*.devportal.name'
-  - devportal.name
+  - '*.${HOST}'
+  - ${HOST}
 EOF
 
 kubectl apply -f certificate_configuration.yaml
