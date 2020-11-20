@@ -2,4 +2,4 @@ serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: role
 securityContext:
-  fsGroup: 1001
+  enabled: true
