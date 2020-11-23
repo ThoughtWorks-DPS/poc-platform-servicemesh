@@ -17,17 +17,17 @@ cat <<EOF >certificate_configuration.yaml
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: devportal-staging
+  name: ${HOST}-issuer
 spec:
   acme:
     email: $EMAIL
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: devportal-staging-secret
+      name: ${HOST}-secret
     solvers:
     - selector:
         dnsZones:
-          - "${HOST}"
+          - ${HOST}
       dns01:
         route53:
           region: $AWS_DEFAULT_REGION
@@ -36,15 +36,14 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: devportal-certificate
+  name: ${HOST}-certificate
   namespace: istio-system
 spec:
-  secretName: devportal-certificate-secret
+  secretName: ${HOST}-secret
   issuerRef:
-    name: devportal-staging
+    name: ${HOST}-issuer
     kind: ClusterIssuer
   dnsNames:
-  - '*.${HOST}'
   - ${HOST}
 EOF
 

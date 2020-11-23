@@ -60,7 +60,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: httpbin-gateway
-  namespace: istio-system
+  namespace: httpbin
 spec:
   selector:
     istio: ingressgateway
@@ -73,7 +73,7 @@ spec:
     - "$HOST"
     tls:
       mode: SIMPLE
-      credentialName: devportal-certificate-secret
+      credentialName: ${HOST}-certificate
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
