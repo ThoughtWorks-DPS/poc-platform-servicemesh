@@ -60,7 +60,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: httpbin-gateway
-  namespace: httpbin
+  namespace: istio-gateway
 spec:
   selector:
     istio: ingressgateway
