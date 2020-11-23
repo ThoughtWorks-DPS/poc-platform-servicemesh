@@ -45,9 +45,9 @@ spec:
   issuerRef:
     name: ${HOST}-issuer
     kind: ClusterIssuer
-  commonName: httpbin.${HOST}
+  commonName: ${HOST}
   dnsNames:
-  - httpbin.${HOST}
+  - ${HOST}
 EOF
 
 kubectl apply -f certificate_configuration.yaml
