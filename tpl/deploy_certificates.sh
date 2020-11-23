@@ -33,7 +33,7 @@ spec:
           hostedZoneID: $HOSTED_ZONE_ID
       selector:
         dnsZones:
-          - "httpbin.sandbox.devportal.name"
+          - httpbin.${HOST}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -45,9 +45,9 @@ spec:
   issuerRef:
     name: ${HOST}-issuer
     kind: ClusterIssuer
-  commonName: httpbin.sandbox.devportal.name
+  commonName: httpbin.${HOST}
   dnsNames:
-  - httpbin.sandbox.devportal.name
+  - httpbin.${HOST}
 EOF
 
 kubectl apply -f certificate_configuration.yaml
