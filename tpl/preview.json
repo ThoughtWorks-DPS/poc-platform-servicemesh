@@ -5,5 +5,7 @@
   "default_limits_memory": "1024Mi",
   "kiali_version": "1.24.0",
   "cert_manager_version": "1.0.4",
-  "host": "devportal.name"
+  "host": "devportal.name",
+  "issuer": "letencrypt-staging",
+  "issuerEndpoint": "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
