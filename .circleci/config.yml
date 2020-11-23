@@ -55,7 +55,10 @@ commands:
           name: deploy certificates
           command: bash tpl/deploy_certificates.sh << parameters.cluster >>
       - run:
-          name: deploy httpbin and validate
+          name: test certificate readiness
+          command: CLUSTER=<< parameters.cluster >> bats test/platform_certificate.bats
+      - run:
+          name: deploy httpbin
           command: bash tpl/deploy_httpbin.sh << parameters.cluster >>
       - run:
           name: test httpbin traffic

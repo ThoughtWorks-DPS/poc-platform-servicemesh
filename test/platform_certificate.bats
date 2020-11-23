@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 @test "validate clusterissuer is up and ready" {
-  HOST=".devportal.name"
+  HOST="devportal.name"
   if [[ $CLUSTER == 'sandbox' ]]; then
     HOST="$CLUSTER.devportal.name/"
   fi
@@ -11,7 +11,7 @@
 }
 
 @test "validate certificate successfully issued" {
-  HOST=".devportal.name"
+  HOST="devportal.name"
   if [[ $CLUSTER == 'sandbox' ]]; then
     HOST="$CLUSTER.devportal.name/"
   fi
