@@ -70,7 +70,7 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "$HOST"
+    - *."$HOST"
     tls:
       mode: SIMPLE
       credentialName: ${HOST}-certificate
