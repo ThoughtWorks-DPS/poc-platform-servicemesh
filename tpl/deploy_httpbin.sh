@@ -72,7 +72,7 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "*.$HOST"
+    - "httpbin.$HOST"
     tls:
       mode: SIMPLE
       credentialName: ${HOST}-secret
