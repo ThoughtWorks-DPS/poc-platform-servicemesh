@@ -13,15 +13,18 @@ export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
 export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $HOST | jq -r --arg DNS $HOST '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
 
+export ISSUER_NAME=$(cat tpl/${1}.json | jq -r '.issuer')
+export ISSUER_ENDPOINT=$(cat tpl/${1}.json | jq -r '.issuerEndpoint')
+
 cat <<EOF >certificate_configuration.yaml
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: ${HOST}-issuer
+  name: ${ISSUER_NAME}-issuer
 spec:
   acme:
     email: $EMAIL
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: $ISSUER_ENDPOINT
     privateKeySecretRef:
       name: ${HOST}-secret
     solvers:
