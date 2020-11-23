@@ -70,10 +70,10 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - *."$HOST"
+    - "*.$HOST"
     tls:
       mode: SIMPLE
-      credentialName: ${HOST}-certificate
+      credentialName: ${HOST}-secret
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
