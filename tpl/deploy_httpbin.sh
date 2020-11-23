@@ -73,9 +73,9 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: ${HOST}-secret
+      credentialName: ${HOST}-certificate
     hosts:
-    - "$HOST"
+    - "httpbin.sandbox.devportal.name"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -84,7 +84,7 @@ metadata:
   namespace: httpbin
 spec:
   hosts:
-  - "$HOST"
+  - "httpbin.sandbox.devportal.name"
   gateways:
   - httpbin-gateway
   http:

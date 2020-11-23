@@ -25,7 +25,7 @@ spec:
     email: $EMAIL
     server: $ISSUER_ENDPOINT
     privateKeySecretRef:
-      name: ${HOST}-secret
+      name: ${HOST}-certificate
     solvers:
     - dns01:
         route53:
@@ -33,7 +33,7 @@ spec:
           hostedZoneID: $HOSTED_ZONE_ID
       selector:
         dnsZones:
-          - ${HOST}
+          - "httpbin.sandbox.devportal.name"
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -41,13 +41,13 @@ metadata:
   name: ${HOST}-certificate
   namespace: istio-system
 spec:
-  secretName: ${HOST}-secret
+  secretName: ${HOST}-certificate
   issuerRef:
     name: ${HOST}-issuer
     kind: ClusterIssuer
-  commonName: ${HOST}
+  commonName: httpbin.sandbox.devportal.name
   dnsNames:
-  - ${HOST}
+  - httpbin.sandbox.devportal.name
 EOF
 
 kubectl apply -f certificate_configuration.yaml
