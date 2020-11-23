@@ -6,7 +6,14 @@
 export CERT_MANAGER_VERSION=$(cat tpl/${1}.json | jq -r '.cert_manager_version')
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)
 
-kubectl create namespace cert-manager
+cat <<EOF > cert-manager-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+EOF
+kubectl apply -f cert-manager-namespace.yaml
+
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
