@@ -27,13 +27,13 @@ spec:
     privateKeySecretRef:
       name: ${HOST}-secret
     solvers:
-    - selector:
-        dnsZones:
-          - ${HOST}
-      dns01:
+    - dns01:
         route53:
           region: $AWS_DEFAULT_REGION
           hostedZoneID: $HOSTED_ZONE_ID
+      selector:
+        dnsZones:
+          - ${HOST}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -45,6 +45,7 @@ spec:
   issuerRef:
     name: ${HOST}-issuer
     kind: ClusterIssuer
+  commonName: ${HOST}
   dnsNames:
   - ${HOST}
 EOF

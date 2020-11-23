@@ -71,11 +71,11 @@ spec:
       number: 443
       name: https
       protocol: HTTPS
-    hosts:
-    - "httpbin.$HOST"
     tls:
       mode: SIMPLE
       credentialName: ${HOST}-secret
+    hosts:
+    - "$HOST"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
