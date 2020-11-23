@@ -33,7 +33,7 @@ spec:
           hostedZoneID: $HOSTED_ZONE_ID
       selector:
         dnsZones:
-          - httpbin.${HOST}
+          - ${HOST}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
