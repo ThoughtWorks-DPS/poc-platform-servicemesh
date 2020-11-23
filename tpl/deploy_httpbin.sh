@@ -9,6 +9,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: httpbin
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: v1
 kind: ServiceAccount
