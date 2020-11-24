@@ -7,7 +7,7 @@ cat <<EOF > api-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: api-gateway-${2}
+  name: api-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -21,7 +21,7 @@ spec:
 ---
 kind: VirtualService
  metadata:
-  name: api-virtual-service-${2}
+  name: api-virtual-service
  spec:
   hosts:
   - "$API_GATEWAY_SUBDOMAIN"
