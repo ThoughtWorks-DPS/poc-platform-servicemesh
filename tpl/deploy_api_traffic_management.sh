@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export API_GATEWAY_SUBDOMAIN=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.${2}")
+export API_GATEWAY_SUBDOMAIN=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.\"${2}\"")
 
 cat <<EOF > api-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
