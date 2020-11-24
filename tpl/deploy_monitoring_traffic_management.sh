@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 
-export cluster=$1
-if [[ $cluster == 'preview' ]]; then
-  host='monitoring.devportal.name'
-fi
-
-if [[ $cluster == 'sandbox' ]]; then
-  host="*.$cluster.devportal.name"
-fi
+export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
 cat <<EOF > monitoring-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -24,7 +17,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "$host"
+        - "*.${HOST}"
 EOF
 kubectl apply -f monitoring-traffic-management.yaml
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-export cluster=$1
 export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
 cat <<EOF > httpbin.yaml

@@ -8,16 +8,9 @@ export AWS_SECRET_ACCESS_KEY=$(cat credentials | jq -r ".Credentials.SecretAcces
 export AWS_SESSION_TOKEN=$(cat credentials | jq -r ".Credentials.SessionToken")
 export AWS_DEFAULT_REGION=us-west-2
 
-export cluster=$1
-if [[ $cluster == 'preview' ]]; then
-  host='devportal.name'
-fi
+export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
-if [[ $cluster == 'sandbox' ]]; then
-  host="$1.devportal.name"
-fi
-
-export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $host | jq -r --arg DNS $host '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
+export HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name $HOST | jq -r --arg DNS $HOST '.HostedZones[] | select( .Name | startswith($DNS)) | .Id')
 
 # external-dns deployment files
 cat <<EOF >external-dns-deployment.yaml
@@ -90,7 +83,7 @@ spec:
         - --source=ingress
         - --source=istio-gateway
         - --source=istio-virtualservice
-        - --domain-filter=$host
+        - --domain-filter=${HOST}
         - --provider=aws
         # - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
         - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
