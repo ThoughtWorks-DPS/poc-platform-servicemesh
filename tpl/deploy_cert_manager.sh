@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#
-# parameters
-# $1 = cluster config to use
+set -e
 
 export CERT_MANAGER_VERSION=$(cat tpl/${1}.json | jq -r '.cert_manager_version')
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)

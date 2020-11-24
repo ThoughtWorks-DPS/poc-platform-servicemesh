@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 export API_GATEWAY_SUBDOMAIN=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.${2}")
 

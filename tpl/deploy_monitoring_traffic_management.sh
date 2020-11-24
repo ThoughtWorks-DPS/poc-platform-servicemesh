@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 export HOST=$(cat tpl/${1}.json | jq -r '.host')
 

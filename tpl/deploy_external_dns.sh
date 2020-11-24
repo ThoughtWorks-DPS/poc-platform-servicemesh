@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 export AWS_ACCOUNT_ID=$(secrethub read vapoc/platform/svc/aws/aws-account-id)
 

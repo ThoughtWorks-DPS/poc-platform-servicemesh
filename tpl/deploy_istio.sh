@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#
-# parameters
-# $1 = cluster config to use
+set -e
 
 export ISTIO_VERSION=$(cat tpl/${1}.json | jq -r '.istio_version')
 export KIALI_VERSION=$(cat tpl/${1}.json | jq -r '.kiali_version')
