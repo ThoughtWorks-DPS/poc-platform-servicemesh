@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-export API_GATEWAY_SUBDOMAIN=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.\"${2}\"")
+export API_GATEWAY_DEV=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.dev")
+export API_GATEWAY_STAGING=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.staging")
 
 cat <<EOF > api-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: api-gateway
+  name: api-gateway-dev
+  namespace: istio-system
 spec:
   selector:
     istio: ingressgateway
@@ -17,27 +19,24 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "$API_GATEWAY_SUBDOMAIN"
+    - "$API_GATEWAY_DEV"
 ---
 apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+kind: Gateway
 metadata:
-  name: api-virtual-service
+  name: api-gateway-staging
+  namespace: istio-system
 spec:
-  hosts:
-  - "$API_GATEWAY_SUBDOMAIN"
-  gateways:
-  - api-gateway
-  http:
-    - match:
-      - uri:
-          prefix: /teams
-      route:
-      - destination:
-          host: poc-va-api
-          port:
-            number: 5000
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "$API_GATEWAY_STAGING"
 EOF
-kubectl apply -f api-traffic-management.yaml -n ${2}
+kubectl apply -f api-traffic-management.yaml
 
 sleep 10
