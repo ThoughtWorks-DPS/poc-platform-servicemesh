@@ -1,28 +1,12 @@
 #!/usr/bin/env bash
 
-export cluster=$1
-export namespace=$2
-if [[ $cluster == 'preview' ]]; then
-  if [[ $namespace == 'di-dev' ]]; then
-    host='dev.devportal.name'
-  elif [[ $namespace == 'di-staging' ]]; then
-    host='api.devportal.name'
-  fi
-fi
-
-if [[ $cluster == 'sandbox' ]]; then
-  if [[ $namespace == 'di-dev' ]]; then
-    host="dev.$cluster.devportal.name"
-  elif [[ $namespace == 'di-staging' ]]; then
-    host="api.$cluster.devportal.name"
-  fi
-fi
+export API_GATEWAY_SUBDOMAIN=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.${2}")
 
 cat <<EOF > api-traffic-management.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: api-gateway
+  name: api-gateway-${2}
 spec:
   selector:
     istio: ingressgateway
@@ -32,15 +16,14 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "$host"
+    - "$API_GATEWAY_SUBDOMAIN"
 ---
-apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
-metadata:
-  name: api-virtual-service
-spec:
+ metadata:
+  name: api-virtual-service-${2}
+ spec:
   hosts:
-  - "$host"
+  - "$API_GATEWAY_SUBDOMAIN"
   gateways:
   - api-gateway
   http:

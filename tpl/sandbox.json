@@ -6,5 +6,9 @@
   "kiali_version": "1.24.0",
   "cert_manager_version": "1.0.4",
   "host": "sandbox.devportal.name",
+  "api_gateway_subdomains": {
+    "dev": "dev.sandbox.devportal.name",
+    "staging": "api.sandbox.devportal.name"
+  },
   "issuerEndpoint": "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
