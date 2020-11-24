@@ -6,7 +6,7 @@
     HOST="$CLUSTER.devportal.name"
   fi
 
-  run bash -c "kubectl get clusterissuer $HOST-issuer -n cert-manager -o json | jq -r '.status.conditions[] | select(.type=\"Ready\")' | .status'"
+  run bash -c "kubectl get clusterissuer $HOST-issuer -n cert-manager -o json | jq -r '.status.conditions[] | select(.type=\"Ready\") | .status'"
   [[ ${output} =~ "True" ]]
 }
 
