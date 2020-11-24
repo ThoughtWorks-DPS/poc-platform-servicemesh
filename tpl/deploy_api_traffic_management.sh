@@ -19,10 +19,11 @@ spec:
     hosts:
     - "$API_GATEWAY_SUBDOMAIN"
 ---
+apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
- metadata:
+metadata:
   name: api-virtual-service
- spec:
+spec:
   hosts:
   - "$API_GATEWAY_SUBDOMAIN"
   gateways:
