@@ -7,8 +7,8 @@
   "cert_manager_version": "1.0.4",
   "host": "sandbox.devportal.name",
   "api_gateway_subdomains": {
-    "dev": "dev.sandbox.devportal.name",
-    "staging": "api.sandbox.devportal.name"
+    "di-dev": "dev.sandbox.devportal.name",
+    "di-staging": "api.sandbox.devportal.name"
   },
   "issuerEndpoint": "https://acme-staging-v02.api.letsencrypt.org/directory"
 }

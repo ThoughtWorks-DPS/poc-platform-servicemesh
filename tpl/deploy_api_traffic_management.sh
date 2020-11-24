@@ -36,6 +36,6 @@ kind: VirtualService
           port:
             number: 5000
 EOF
-kubectl apply -f api-traffic-management.yaml -n $2
+kubectl apply -f api-traffic-management.yaml -n ${2}
 
 sleep 10
