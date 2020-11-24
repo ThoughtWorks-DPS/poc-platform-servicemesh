@@ -10,5 +10,5 @@
     "dev": "dev.sandbox.devportal.name",
     "staging": "api.sandbox.devportal.name"
   },
-  "issuerEndpoint": "https://acme-staging-v02.api.letsencrypt.org/directory"
+  "issuerEndpoint": "https://acme-v02.api.letsencrypt.org/directory"
 }
