@@ -5,6 +5,22 @@ export API_GATEWAY=$(cat tpl/${1}.json | jq -r ".api_gateway_subdomains.${2}")
 export HOST=$(cat tpl/${1}.json | jq -r '.host')
 
 cat <<EOF > api-traffic-management.yaml
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ${HOST}-${2}-certificate
+  namespace: istio-system
+spec:
+  secretName: ${HOST}-${2}-certificate
+  issuerRef:
+    name: ${HOST}-issuer
+    kind: ClusterIssuer
+  commonName: '*.${HOST}'
+  dnsNames:
+  - ${HOST}
+  - '*.${HOST}'
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -20,7 +36,7 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: ${HOST}-certificate
+      credentialName: ${HOST}-${2}-certificate
     hosts:
     - "$API_GATEWAY"
 EOF
