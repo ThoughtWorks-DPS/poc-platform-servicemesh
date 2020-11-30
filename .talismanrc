@@ -1,3 +1,21 @@
 fileignoreconfig:
 - filename: tpl/deploy_api_traffic_management.sh
   checksum: cf3ba13a040876d69ea8b84a485a1495024dd86b40a23eaf511d3be59b21754f
+- filename: secrethub.env
+  checksum: 2eef2eaf61f3ea7617d06ebb2fc746e28c971d12b581a5445631fa42a731d3e7
+- filename: tpl/deploy_api_traffic_management.sh
+  checksum: cf3ba13a040876d69ea8b84a485a1495024dd86b40a23eaf511d3be59b21754f
+- filename: tpl/deploy_certificates.sh
+  checksum: 47d559874d210bece7e3d121916b11bec241a100932e18a75f30fc97fd7a9bff
+- filename: tpl/deploy_external_dns.sh
+  checksum: 9d8035c1e764660873892aea30f127630911834fcecbf7d07f250fea541457b2
+- filename: .circleci/config.yml
+  checksum: 7ace2835966da7e131917ef4a9ac1baaffcc32f6e80a2f051a45ffb296e1b44a
+- filename: istio-deploy-overlay.yaml
+  checksum: e29a3c962c72ca1d98321b61cfbae1812a38458e7058a6f1f7109c2b6faba081
+- filename: kiali-deployment.yaml
+  checksum: ba819a498a11f93b6b5979bdc04dd80ecd859e6bf8d0b89cf631e8fdaf39566a
+- filename: .circleci/config.yml
+  checksum: ef1ff8de8ae38e38bde742305aa32da2bfe2b196d5e4c927cc00037ebfb44669
+- filename: .circleci/config.yml
+  checksum: 7ace2835966da7e131917ef4a9ac1baaffcc32f6e80a2f051a45ffb296e1b44a
