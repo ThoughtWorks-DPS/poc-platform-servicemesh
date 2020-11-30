@@ -18,8 +18,7 @@ spec:
     kind: ClusterIssuer
   commonName: '*.${HOST}'
   dnsNames:
-  - ${HOST}
-  - '*.${HOST}'
+  - "$API_GATEWAY"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
