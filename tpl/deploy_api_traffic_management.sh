@@ -16,7 +16,7 @@ spec:
   issuerRef:
     name: ${HOST}-issuer
     kind: ClusterIssuer
-  commonName: '*.${HOST}'
+  commonName: "$API_GATEWAY"
   dnsNames:
   - "$API_GATEWAY"
 ---
