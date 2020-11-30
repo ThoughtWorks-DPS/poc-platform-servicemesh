@@ -70,7 +70,6 @@ commands:
           name: deploy api traffic management for dev and staging subdomains
           command: |
             bash tpl/deploy_api_traffic_management.sh << parameters.cluster >> dev
-            bash tpl/deploy_api_traffic_management.sh << parameters.cluster >> staging
       - run:
           name: test api traffic management
           command: CLUSTER=<< parameters.cluster >> bats test/platform_traffic_management.bats
