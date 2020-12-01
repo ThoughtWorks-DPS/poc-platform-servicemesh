@@ -72,6 +72,8 @@ spec:
       protocol: HTTP
     tls:
       httpsRedirect: true
+    hosts:
+    - "*.${HOST}"
   - port:
       number: 443
       name: https
