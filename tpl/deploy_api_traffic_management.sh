@@ -34,7 +34,7 @@ spec:
       name: http
       protocol: HTTP
     tls:
-      httpRedirect: true
+      httpsRedirect: true
     hosts:
     - "$API_GATEWAY"
   - port:
