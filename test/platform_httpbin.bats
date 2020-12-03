@@ -23,6 +23,6 @@
     HOST="http://httpbin.$CLUSTER.devportal.name/"
   fi
 
-  run bash -c "curl -s -o /dev/null -w "%{http_code}" $HOST/get $ARGS"
+  run bash -c "curl -Ls -o /dev/null -w "%{http_code}" $HOST/get $ARGS"
   [[ ${output} =~ "200" ]]
 }
