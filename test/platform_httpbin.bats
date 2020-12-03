@@ -15,3 +15,14 @@
   run bash -c "curl -s -o /dev/null -w "%{http_code}" $HOST/get $ARGS"
   [[ ${output} =~ "200" ]]
 }
+
+@test "validate httpbin protocol redirect" {
+  HOST="http://httpbin.devportal.name"
+  ARGS="--insecure"
+  if [[ $CLUSTER == 'sandbox' ]]; then
+    HOST="http://httpbin.$CLUSTER.devportal.name/"
+  fi
+
+  run bash -c "curl -s -o /dev/null -w "%{http_code}" $HOST/get $ARGS"
+  [[ ${output} =~ "200" ]]
+}
