@@ -7,7 +7,7 @@ orbs:
 executors:
   infra-image:
     docker:
-      - image: twdps/di-circleci-infra-image:stable
+      - image: twdps/di-circleci-infra-image:1.13.0
         auth:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
